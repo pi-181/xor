@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Course \'' + ${course.courseName} + '\''">Course Page</title>
+    <th:block th:replace="fragments/common_head :: head"></th:block>
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body>
+
+<div class="pusher">
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="ui vertical stripe segment three center aligned grid" th:fragment="content">
+        <div class="ui main text container wide floated column">
+            <div class="ui segment">
+                <p class="left input" th:text="${course.courseName}"></p>
+                <a class="right" th:href="'/courses/editor/' + ${course.id}">Edit</a>
+            </div>
+            <div class="ui secondary segment">
+                <p th:text="${course.description}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

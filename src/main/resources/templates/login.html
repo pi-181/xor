@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <th:block th:replace="fragments/common_head :: head"></th:block>
+    <style type="text/css">
+        body > .grid {
+            height: 100%;
+        }
+
+        .image {
+            margin-top: -100px;
+        }
+
+        .column {
+            max-width: 450px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="ui middle aligned center aligned grid">
+    <div class="column" sec:authorize="isAuthenticated()"><div class="ui negative message">You already logged in.</div></div>
+    <div class="column" sec:authorize="!isAuthenticated()">
+        <h2 class="ui green image header"><div class="content">Log-in to your account</div></h2>
+        <form class="ui large form" method="post" th:action="@{/login}">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i><input type="text" name="username" placeholder="Login">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i><input type="password" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <input type="submit" class="ui fluid large green submit button" value="Login"/>
+            </div>
+        </form>
+
+        <div class="ui message">New to us? <a th:href="@{/register}">Sign Up</a></div>
+        <div class="ui negative message" th:if="${param.error}">Invalid login and password.</div>
+        <div class="ui negative message" th:if="${param.logout}">You have been logged out.</div>
+    </div>
+</div>
+
+</body>
+</html>

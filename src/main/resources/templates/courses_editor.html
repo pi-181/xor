@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Editor</title>
+    <th:block th:replace="fragments/common_head :: head"></th:block>
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body>
+
+<div class="pusher">
+    <div th:replace="fragments/header :: header"></div>
+    <div class="ui floated column"></div>
+    <div class="ui main text container center aligned grid">
+        <div class="ui vertical stripe segment four column" th:fragment="content">
+            <div class="row">
+                <div>
+                    <form class="ui large form" method="post" th:action="@{'/courses/editor/' + ${course.id}}">
+                        <div class="field">
+                            <div class="ui left input">
+                                <input type="text" name="courseName" placeholder="Course name"
+                                       th:value="${course.courseName}">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left input">
+                                <input type="text" name="description" placeholder="Description"
+                                       th:value="${course.description}">
+                            </div>
+                        </div>
+                        <button class="ui fluid green submit button" type="submit">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+
+    <th:block th:fragment="head">
+        <link rel="stylesheet" type="text/css" href="/static/style/components/sidebar.css">
+        <style type="text/css">
+            .masthead .logo.item img {
+                margin-right: 1em;
+            }
+
+            .masthead .ui.menu .ui.button {
+                margin-left: 0.5em;
+            }
+
+            .masthead h1.ui.header {
+                margin-top: 3em;
+                margin-bottom: 0em;
+                font-size: 4em;
+                font-weight: normal;
+            }
+
+            .masthead h2 {
+                font-size: 1.7em;
+                font-weight: normal;
+            }
+
+            .ui.vertical.stripe h3 {
+                font-size: 2em;
+            }
+
+            .ui.vertical.stripe .button + h3,
+            .ui.vertical.stripe p + h3 {
+                margin-top: 3em;
+            }
+
+            .ui.vertical.stripe .floated.image {
+                clear: both;
+            }
+
+            .ui.vertical.stripe p {
+                font-size: 1.33em;
+            }
+
+            .ui.vertical.stripe .horizontal.divider {
+                margin: 3em 0em;
+            }
+
+            .quote.stripe.segment .grid .column {
+                padding-top: 5em;
+                padding-bottom: 5em;
+            }
+
+            .secondary.pointing.menu .toc.item {
+                display: none;
+            }
+        </style>
+        <script src="/static/style/components/visibility.js"></script>
+        <script src="/static/style/components/sidebar.js"></script>
+        <script src="/static/style/components/transition.js"></script>
+        <script>
+            $(document)
+                .ready(function () {
+
+                    // fix menu when passed
+                    $('.masthead')
+                        .visibility({
+                            once: false,
+                            onBottomPassed: function () {
+                                $('.fixed.menu').transition('fade in');
+                            },
+                            onBottomPassedReverse: function () {
+                                $('.fixed.menu').transition('fade out');
+                            }
+                        })
+                    ;
+
+                    // create sidebar and attach to menu open
+                    $('.ui.sidebar')
+                        .sidebar('attach events', '.toc.item')
+                    ;
+
+                })
+            ;
+        </script>
+    </th:block>
+</head>
+<body>
+
+<div th:fragment="header">
+<div class="ui sidebar vertical inverted menu right" id="toc" sec:authorize="isAuthenticated()">
+    <div style="z-index: 999" class="item"><a href="/"><b>XOR</b></a></div>
+
+    <div class="item">
+        <div class="active header">User</div>
+        <div class="menu">
+            <!--/*@thymesVar id="user" type="com.demkom58.xor.entity.User"*/-->
+            <a class="item" th:href="@{'/profile/' + ${user?.id}}">Profile</a>
+            <a class="item" href="/message">Private Messages</a>
+            <form id="logout-form" method="post" th:action="@{/logout}">
+                <a class="item" type="submit" onclick="document.getElementById('logout-form').submit()">Logout</a>
+            </form>
+        </div>
+        <div class="item"></div>
+        <div class="active  header">Modules</div>
+        <div class="menu">
+            <a class="item" href="/modules/accordion.html">Accordion</a>
+            <a class="item" href="/modules/checkbox.html">Checkbox</a>
+            <a class="item" href="/modules/dimmer.html">Dimmer</a>
+            <a class="item" href="/modules/dropdown.html">Dropdown</a>
+            <a class="item" href="/modules/embed.html">Embed</a>
+        </div>
+    </div>
+</div>
+
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+        <div class="ui container">
+            <div class="ui large secondary inverted menu">
+                <a class="active item" href="/">Home</a>
+                <a class="item">Info</a>
+                <a class="item">Events</a>
+                <a class="item" th:href="@{/courses}">Courses</a>
+                <div class="ui container" sec:authorize="isAuthenticated()">
+                    <a class="launch icon item right" onclick="$('.ui.sidebar').sidebar('toggle');">
+                        <i class="content icon"></i>
+                    </a>
+                </div>
+                <div class="right item" sec:authorize="!isAuthenticated()">
+                    <a class="ui inverted button" th:href="@{/login}">Log in</a>
+                    <a class="ui inverted button" th:href="@{/register}">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

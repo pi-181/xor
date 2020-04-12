@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageUser.fullName}">Profile</title>
+    <th:block th:replace="fragments/common_head :: head"></th:block>
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body>
+
+<div class="pusher">
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="ui vertical stripe segment four column grid" th:fragment="content">
+        <div class="ui floated column"></div>
+        <div class="ui main text container four floated column">
+            <div class="ui card">
+                <div class="image">
+                    <img src="https://semantic-ui.com/images/avatar2/large/matthew.png">
+                </div>
+                <div class="content">
+                    <a class="header"><span th:text="${pageUser.fullName}"></span></a>
+                    <div class="meta">
+                        <span th:text="'@' + ${pageUser.login}"></span>
+<!--                        <span class="date">Join date</span>-->
+                    </div>
+                    <div class="description">
+                        <span th:text="${pageUser.status ?: 'No status'}"></span>
+                    </div>
+                </div>
+<!--                <div class="extra content">-->
+<!--                    <a><i class="user icon"></i>Somethin here</a>-->
+<!--                </div>-->
+                <div class="extra content">
+                    <div class="ui two buttons" th:if="!${ownerViewer}">
+                        <div class="ui basic yellow button">Send message</div>
+                        <div class="ui basic green button">Add to friends</div>
+                    </div>
+                    <div class="ui buttons" th:if="${ownerViewer}">
+                        <div class="ui basic green button">Edit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui comments floated column">
+            <h3 class="ui dividing header" th:text="${ownerViewer ? 'Your wall' : pageUser.name + '`s wall'}"></h3>
+            <div class="comment" th:each="post : ${pageUser.wallPosts}">
+                <a class="avatar">
+                    <img src="https://semantic-ui.com/images/avatar/small/matt.jpg">
+                </a>
+                <div class="content">
+                    <a class="author" th:text="${post.sender.name}" th:href="@{'/profile/' + ${post.sender.id}}"></a>
+                    <a th:text="'@' + ${post.sender.login}" th:href="@{'/profile/' + ${post.sender.id}}"></a>
+                    <div class="text" th:text="${post.content}"></div>
+                </div>
+            </div>
+            <form class="ui reply form" id="post-form" method="post" th:action="@{'/profile/' + ${pageUser.id}}">
+                <div class="field"><textarea name="content"></textarea></div>
+                <div class="ui blue labeled submit icon button" onclick="document.getElementById('post-form').submit()"><i class="icon edit"></i>Add Reply</div>
+            </form>
+        </div>
+        <div class="ui floated column"></div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

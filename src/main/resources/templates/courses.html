@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+    <th:block th:replace="fragments/common_head :: head"></th:block>
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body>
+
+<div class="pusher">
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="ui vertical padded grid" th:fragment="content">
+        <div class="ui wide floated column">
+            <div class="ui row main text container">
+                <form class="ui large form" method="post" th:action="@{/courses/search}">
+                    <div class="ui stacked segment">
+                        <h2 class="ui green header">Search</h2>
+                        <div class="field">
+                            <div class="ui left input">
+                                <input class="ui input" type="text" name="courseName" placeholder="Course name"/>
+                            </div>
+                        </div>
+                        <button class="ui fluid green submit button" type="submit">Find</button>
+                    </div>
+                </form>
+            </div>
+            <div class="ui row main text container">
+                <div class="ui divided items">
+                    <div class="item" th:each="course : ${courses}">
+                        <div class="ui small image">
+                            <img src="https://semantic-ui.com/images/wireframe/image.png">
+                        </div>
+                        <div class="content">
+                            <div class="header" th:text="${course.courseName}">Random Course</div>
+                            <div class="description"><p th:text="${course.description}"></p></div>
+                            <div class="extra">
+                                <a class="ui right floated green button" th:href="@{'/course/' + ${course.id}}">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>
