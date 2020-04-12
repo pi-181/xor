@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="XorApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="xor_main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.demkom58.xor.XorApplication" />
+    <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/run" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
