@@ -28,6 +28,13 @@ public class Message {
         this.receiver = receiver;
     }
 
+    public Message(Long id, String content, User sender, User receiver) {
+        this.id = id;
+        this.content = content;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
+
     public Long getId() {
         return id;
     }
@@ -58,5 +65,45 @@ public class Message {
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private Long id;
+        @NotBlank(message = "Message cannot be empty")
+        private String content;
+
+        private User sender;
+        private User receiver;
+
+        private Builder() {}
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder content(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public Builder sender(User sender) {
+            this.sender = sender;
+            return this;
+        }
+
+        public Builder receiver(User receiver) {
+            this.receiver = receiver;
+            return this;
+        }
+
+        public Message build() {
+            return new Message(id, content, sender, receiver);
+        }
+
     }
 }
