@@ -73,9 +73,7 @@ public class Message {
 
     public static class Builder {
         private Long id;
-        @NotBlank(message = "Message cannot be empty")
         private String content;
-
         private User sender;
         private User receiver;
 
